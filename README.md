@@ -2,6 +2,8 @@
 
 Viewfinder is a participatory toolkit designed to facilitate ethical reflection about responsible AI implementation in library and archival settings. By examining scenarios through the lens of diverse stakeholder perspectives, this tool helps practitioners identify potential ethical risks and align AI projects with core institutional values.
 
+- **Use the online version of the Viewfinder Toolkit:** [lib.montana.edu/responsible-ai/viewfinder/](https://www.lib.montana.edu/responsible-ai/viewfinder/)
+
 ---
 
 ## Project Background
@@ -41,9 +43,6 @@ Reflect on and respond to the provided Reflection Prompts. Record your notes and
 
 ---
 
-## ⚖️ License & Usage
+## ⚖️License & Usage
 This project is licensed under **CC BY 4.0**.
 **Version:** 1.0 | 2025
-
----
-*Facilitating ethical reflection for the future of libraries and archives.*

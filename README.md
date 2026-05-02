@@ -4,7 +4,7 @@ Viewfinder is a participatory toolkit designed to facilitate ethical reflection 
 
 ---
 
-## 📖 Project Background
+## Project Background
 Developed by librarians at **Montana State University, University of Montana, James Madison University, and Iowa State University**, Viewfinder is the result of research conducted between 2022 and 2025. This project was made possible in part by funding from the **Institute of Museum and Library Services (IMLS)**.
 
 - **Official Project Page:** [lib.montana.edu/responsible-ai/](https://www.lib.montana.edu/responsible-ai/)
@@ -12,7 +12,7 @@ Developed by librarians at **Montana State University, University of Montana, Ja
 
 ---
 
-## 🛠 How to Use the Toolkit
+## How to Use the Toolkit
 The toolkit is organized into three sections: **Scenarios**, **Stakeholders**, and **Values**. Follow these five steps to conduct an ethical reflection:
 
 ### Step 1: Choose Scenario (2 min)
@@ -34,7 +34,7 @@ Reflect on and respond to the provided Reflection Prompts. Record your notes and
 
 ---
 
-## 📄 Resources
+## Resources
 - **[Download Printable PDF Version](#)** (https://osf.io/yue9s)
 - **[Full Documentation](#)** (https://osf.io/re2x7/overview)
 - **[Project Partners](#)** (https://www.lib.montana.edu/responsible-ai/#team)

@@ -43,6 +43,6 @@ Reflect on and respond to the provided Reflection Prompts. Record your notes and
 
 ---
 
-## ⚖️License & Usage
+## License & Usage
 This project is licensed under **CC BY 4.0**.
 **Version:** 1.0 | 2025

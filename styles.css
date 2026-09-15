@@ -983,7 +983,7 @@ h1 {
 /* Reflect and Compare Layout */
 .comparison {
     background: var(--bg-light);
-    border-radius: var(--radius-);
+    border-radius: var(--radius-md);
     padding: var(--spacing-2xl);
     margin: var(--spacing-xl) 0;
     border: 1px solid var(--border-medium);

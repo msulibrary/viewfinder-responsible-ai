@@ -1077,18 +1077,6 @@ function updateComparison() {
             .map(value => `<span class="comparison-tag">${utils.formatValueForDisplay(value, 'stakeholder')}</span>`)
             .join('');
     }
-    
-    const sharedValues = AppState.userValues.filter(userValue => {
-        if (userValue.startsWith('Other (')) return false;
-        return AppState.stakeholderValues.includes(userValue);
-    });
-    
-    const sharedValuesDisplay = document.getElementById('shared-values-display');
-    if (sharedValuesDisplay) {
-        sharedValuesDisplay.innerHTML = sharedValues.length > 0 ? 
-            sharedValues.map(value => `<span class="comparison-tag shared-tag">${value}</span>`).join('') :
-            '<span style="color: #888; font-style: italic;">No shared values</span>';
-    }
 }
 
 function generatePrintableContent() {
@@ -1100,24 +1088,6 @@ function generatePrintableContent() {
   const scenarioDisplayElement = document.getElementById('scenario-display');
   const scenarioText = scenarioDisplayElement?.textContent.trim() || 'N/A';
 
-  const userValues = AppState.userValues.map(value => {
-    if (value === 'Other (user)') return customUserValueText;
-    if (value.startsWith('Other-user-')) {
-        const cardNumber = value.split('-')[2];
-        return document.getElementById(`custom-value-user-${cardNumber}`)?.value || 'Custom Value';
-    }
-    return value;
-  });
-
-  const stakeholderValues = AppState.stakeholderValues.map(value => {
-    if (value === 'Other (stakeholder)') return customStakeholderValueText;
-    if (value.startsWith('Other-stakeholder-')) {
-        const cardNumber = value.split('-')[2];
-        return document.getElementById(`custom-value-stakeholder-${cardNumber}`)?.value || 'Custom Value';
-    }
-    return value;
-  });
-
   const stakeholderName = document.getElementById('stakeholder-values-title')?.textContent.replace("'s Values", "").trim() || 'N/A';
 
   const reflectionAnswers = {
@@ -1126,14 +1096,96 @@ function generatePrintableContent() {
     q3: document.getElementById('q3')?.value || ''
   };
 
-  const sharedValues = userValues.filter(v => stakeholderValues.includes(v));
-
   let htmlContent = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Values Exercise Summary</title>
+        <title>Viewfinder Summary</title>
+        <style>
+            body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
+            h1, h2 { color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px; }
+            .section { margin-bottom: 20px; }
+            .section-title { font-weight: bold; margin-bottom: 5px; }
+            .step-fieldset { border: none; padding: 0; margin: 0; min-width: 0;}
+            .comparison {background: #f8f9fa ;border-radius: 12px;padding: 25px;margin: 20px 0;border: 1px solid #e9ecef;}
+            .comparison-section {margin-bottom: 20px;}
+            .comparison-section h4 {color: #4677b1);font-size: 1.1rem;margin-bottom: 12px;font-weight: 600;}
+            .comparison-tags {display: flex;flex-wrap: wrap;gap: 10px;}
+            .comparison-tag {background: #f0f0f0;color: #5b5c5c;padding: 8px 16px;border-radius: 20px;font-size: 1rem;border: 2px solid #e4e7e7;font-weight: 500;}
+            .reflection {margin-top: 15px;}
+            .question {margin-bottom: 20px;}
+            .question label {display: block;color: #4677b1;font-weight: 500;margin-bottom: 15px;font-size: 1.3rem;line-height: 1.3;}
+            .reflection .question .text-secondary-small {font-size: 0.95rem;color: #333333;line-height: 1.5;margin: 0;font-weight: 500;padding-bottom: 8px;}
+        </style>
+    </head>
+    <body>
+        <h2>Viewfinder Summary</h2>
+        <h1 id="step5-heading" tabindex="-1">Compare &amp; Reflect</h1>
+        <p>Review your selections and answer the reflection questions.</p>
+        
+        <fieldset class="step-fieldset">
+            <legend class="sr-only">Reflection Questions</legend>
+            <div class="comparison">
+                <!-- Add Scenario Section -->
+                <div class="comparison-section">
+                <h4>Selected Scenario</h4>
+                <div class="comparison-tags" id="scenario-display"><span class="comparison-tag">${scenarioText}<br>Project stage: Information gathering stage, pre-implementation</span></div>
+            </div>
+            
+            <div class="comparison-section">
+                <h4>Your Values</h4>
+                <div class="comparison-tags" id="user-values-display"><span class="comparison-tag">${AppState.userValues[0]}</span><span class="comparison-tag">${AppState.userValues[1]}</span><span class="comparison-tag">${AppState.userValues[2]}</span></div>
+            </div>
+            
+            <div class="comparison-section">
+                <h4 id="stakeholder-values-title">${stakeholderName} Values</h4>
+                <div class="comparison-tags" id="stakeholder-values-display"><span class="comparison-tag">${AppState.stakeholderValues[0]}</span><span class="comparison-tag">${AppState.stakeholderValues[1]}</span><span class="comparison-tag">${AppState.stakeholderValues[2]}</span></div>
+            </div>
+        </div>
+
+        <div class="comparison">
+        <div class="reflection">
+            <div class="question">
+                <label for="q1" id="q1-label">Values</label>
+                <p class="text-secondary-small" id="q1-description">Review the values you selected for yourself and your stakeholder(s).
+                <br> Note where the values agree or disagree across the different stakeholders and which values were left out.
+                <br> What actions can you take to uphold these values?
+                </p>
+                <p class="comparison-tag">${reflectionAnswers.q1}</p>
+            </div>
+        
+            
+            <div class="question">
+                <label for="q2" id="q2-label">Stakeholders</label>
+                <p class="text-secondary-small" id="q2-description">What biases and assumptions came forward when you adopted a different stakeholder perspective?
+                <br> How did you decide which values to select for that stakeholder?
+                <br> What other stakeholder viewpoints need to be considered in your scenario?
+                </p>
+                <p class="comparison-tag">${reflectionAnswers.q2}</p>
+            </div>
+            
+            <div class="question">
+                <label for="q3" id="q3-label">Accountability and Scope</label>
+                <p class="text-secondary-small" id="q3-description">What are the longer-term effects or potential harms of this AI project?
+                <br> Who is accountable for potential harms (e.g., the library, library users, or other third-parties)?
+                <br> What could happen if the AI is implemented beyond its intended scope or purpose?
+                </p>
+                <p class="comparison-tag">${reflectionAnswers.q3}</p>
+            </div>
+            </div>
+        </div>
+        </fieldset>
+                
+  `
+  
+  /*
+  let htmlContent = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Viewfinder Summary</title>
         <style>
             body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
             h1, h2 { color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px; }
@@ -1148,7 +1200,7 @@ function generatePrintableContent() {
         </style>
     </head>
     <body>
-        <h1>Values Exercise Summary</h1>
+        <h1>Viewfinder Summary</h1>
         <div class="section">
             <h2>Scenario</h2>
             <p class="section-title">Selected Scenario:</p>
@@ -1164,12 +1216,6 @@ function generatePrintableContent() {
             <h2>${stakeholderName} Values</h2>
             <ul>
                 ${stakeholderValues.map(val => `<li>${val}</li>`).join('')}
-            </ul>
-        </div>
-        <div class="section">
-            <h2>Shared Values</h2>
-            <ul>
-                ${sharedValues.length > 0 ? sharedValues.map(val => `<li>${val}</li>`).join('') : '<li>No shared values.</li>'}
             </ul>
         </div>
         <div class="section">
@@ -1190,6 +1236,7 @@ function generatePrintableContent() {
     </body>
     </html>
   `;
+  */
   return htmlContent;
 }
 
